@@ -72,7 +72,9 @@ def Overall_split(pic_name):
         if(count_nonzero_index[i] != count_nonzero_index[i-1]+1):
             key_index.append(i)
             print(i, count_nonzero_index[i])
-            
+    if(len(key_index) == 0):    # 针对只有一行谱子的情况
+        key_index.append(count_nonzero_index[0])
+        
     index_continue = []         #得到一段一段连续有值的高度分割的索引
     for i in range(np.shape(key_index)[0]):
         if i == 0:
@@ -150,6 +152,7 @@ def Bar_line_cut(rootFolderName, pic_id):
     five_lines_end = np.max(five_lines_index)    #五线谱结束的行
     height_five_lines = five_lines_end - five_lines_begin
     
+    
     bar_line_index = []     #小节线所在位置
     for j in range(width):
         count_five_lines = 0
@@ -158,26 +161,30 @@ def Bar_line_cut(rootFolderName, pic_id):
                 count_five_lines = count_five_lines + 1
         if count_five_lines == height_five_lines:
             bar_line_index.append(j)
+
     
-    # 检测休止线，并去除
-    pause_index = len(bar_line_index)
+#    # 检测休止线，并去除
+#    pause_index = len(bar_line_index)
+#    for i in range(len(bar_line_index)-2):
+#        if bar_line_index[i] + 1 == bar_line_index[i+1] and bar_line_index[i+1] == bar_line_index[i+2]:
+#            pause_index = i
+#            break;
+#    bar_line_index = bar_line_index[0:pause_index]
+#        
+#    print(pause_index)
+    
+    bar_id = 0
     for i in range(len(bar_line_index)-1):
-        if bar_line_index[i] + 1 == bar_line_index[i+1]:
-            pause_index = i
-            break;
-    bar_line_index = bar_line_index[0:pause_index]
-        
-    for i in range(len(bar_line_index)):
-        if i != len(bar_line_index) - 1:
+        if bar_line_index[i+1] - bar_line_index[i] >= 15:
             box=(bar_line_index[i],0,bar_line_index[i+1],height)
             region=cut_img.crop(box) #此时，region是一个新的图像对象。
             region_arr = 255 - np.array(region)
             region = Image.fromarray(region_arr.astype("uint8"))
-            name = rootFolderName+"/bar_cut_"+str(pic_id)+"_"+str(i)+".png"
+            name = rootFolderName+"/bar_cut_"+str(pic_id)+"_"+str(bar_id)+".png"
             region.save(name)  
-            print('NO.{} bar split complete'.format( i+1 ))
-            
-    return i
+            print('NO.{} bar split complete'.format( bar_id+1 ))
+            bar_id = bar_id + 1
+    return bar_id
 
 def Voice_part_cut(rootFolderName, overrall_id, pic_id, height_total, width_total):
     pic_path = rootFolderName+'/bar_cut_'+str(overrall_id)+'_'+str(pic_id)+'.png'
@@ -261,7 +268,11 @@ def Cut_into_voive_part(pic_name):
 
 if __name__ == '__main__': 
     pic_name = 'EQYY1-3'
-    Cut_into_voive_part(pic_name)
+    pic_name = os.listdir('C:/Users/PKU/Desktop/eye_exp/image')        
+    for i in range(len(pic_name)):
+        print('**********************'+pic_name[i]+'************************')
+        pic_name[i] = pic_name[i][:-4] 
+        Cut_into_voive_part(pic_name[i])
     
         
     
