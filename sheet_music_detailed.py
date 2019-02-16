@@ -12,6 +12,8 @@ import numpy as np
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import os
+import pandas as pd
+import csv
 
 def Traversing_dir(folder_name):    #根据后缀名,遍历文件夹删除文件
     #遍历根目录
@@ -97,6 +99,7 @@ def Overall_split(pic_name):
         count_delete = count_delete + 1
     
     img_split_array = []
+    box_coordinate = []
     for i in range(len(index_continue)):
         box=(0,count_nonzero_index[index_continue[i][0]],width,count_nonzero_index[index_continue[i][1]])
         region=cut_img.crop(box) #此时，region是一个新的图像对象。
@@ -105,15 +108,15 @@ def Overall_split(pic_name):
         region = Image.fromarray(region_arr.astype("uint8"))
         name = pic_name+"/line_cut"+str(i)+".png"
         region.save(name)  
-        print('NO.{} section split complete'.format(i+1))
-        
+        #print('NO.{} section split complete'.format(i+1))
+        box_coordinate.append(box)
         cv.line(img_arr, (0,count_nonzero_index[index_continue[i][0]]), (1669, count_nonzero_index[index_continue[i][0]]), (0,0,255), 1) 
         cv.line(img_arr, (0,count_nonzero_index[index_continue[i][1]]), (1669, count_nonzero_index[index_continue[i][1]]), (0,0,255), 1)
     cv.imwrite(pic_name+'/img_split.png', img_arr) 
     
     plt.imsave(pic_name+'/img_projection.png',img_projection)
     
-    return i+1
+    return i+1, box_coordinate
 
 def Bar_line_cut(rootFolderName, pic_id):
     pic_path = rootFolderName+'/line_cut'+str(pic_id)+'.png'
@@ -174,6 +177,7 @@ def Bar_line_cut(rootFolderName, pic_id):
 #    print(pause_index)
     
     bar_id = 0
+    box_coordinate = []
     for i in range(len(bar_line_index)-1):
         if bar_line_index[i+1] - bar_line_index[i] >= 15:
             box=(bar_line_index[i],0,bar_line_index[i+1],height)
@@ -182,9 +186,10 @@ def Bar_line_cut(rootFolderName, pic_id):
             region = Image.fromarray(region_arr.astype("uint8"))
             name = rootFolderName+"/bar_cut_"+str(pic_id)+"_"+str(bar_id)+".png"
             region.save(name)  
-            print('NO.{} bar split complete'.format( bar_id+1 ))
+            #print('NO.{} bar split complete'.format( bar_id+1 ))
             bar_id = bar_id + 1
-    return bar_id
+            box_coordinate.append(box)
+    return bar_id, box_coordinate
 
 def Voice_part_cut(rootFolderName, overrall_id, pic_id, height_total, width_total):
     pic_path = rootFolderName+'/bar_cut_'+str(overrall_id)+'_'+str(pic_id)+'.png'
@@ -230,6 +235,9 @@ def Voice_part_cut(rootFolderName, overrall_id, pic_id, height_total, width_tota
             voice_part_cut_index = i
             break;
     
+    box_coordinate = []
+    difficulty_local = []
+    difficulty_overall = []
     # 4. 找准位置后进行切割
     box=(0,0,width,voice_part_cut_index)
     region=cut_img.crop(box) #此时，region是一个新的图像对象。
@@ -240,7 +248,11 @@ def Voice_part_cut(rootFolderName, overrall_id, pic_id, height_total, width_tota
     difficuly_upper = np.sum(((255 - np.array(region))/255).astype('int'))
     density_upper = round(difficuly_upper / (height * width), 4)
     density_upper_overall = round(difficuly_upper / (height_total * width_total), 4)
-    print('The upper voice part split complete, difficulty:{:.4}%, difficulty_overall:{:.4}%'.format( density_upper * 100 , density_upper_overall * 100))
+    #print('The upper voice part split complete, difficulty:{:.4}%, difficulty_overall:{:.4}%'.format( density_upper * 100 , density_upper_overall * 100))
+    
+    box_coordinate.append(box)
+    difficulty_local.append(density_upper)
+    difficulty_overall.append(density_upper_overall)
     
     box=(0,voice_part_cut_index,width,len(count))
     region=cut_img.crop(box) #此时，region是一个新的图像对象。
@@ -251,29 +263,66 @@ def Voice_part_cut(rootFolderName, overrall_id, pic_id, height_total, width_tota
     difficuly_lower = np.sum(((255 - np.array(region))/255).astype('int'))
     density_lower = round(difficuly_lower / (height * width), 3)
     density_lower_overall = round(difficuly_lower / (height_total * width_total), 4)
-    print('The lower voice part split complete, difficulty:{:.4}%, difficulty_overall:{:.4}%'.format( density_lower * 100 , density_lower_overall * 100))
+    #print('The lower voice part split complete, difficulty:{:.4}%, difficulty_overall:{:.4}%'.format( density_lower * 100 , density_lower_overall * 100))
+    
+    box_coordinate.append(box)
+    difficulty_local.append(density_lower)
+    difficulty_overall.append(density_lower_overall)
+    
+    return box_coordinate, difficulty_local, difficulty_overall
+
 
 def Cut_into_voive_part(pic_name):
     Folder_check(pic_name)
     Folder_check(pic_name+'/result')
-    overall_num = Overall_split(pic_name)   # 返回有多少图片要放入bar切割
+    overall_num, overall_coordinate = Overall_split(pic_name)   # 返回有多少图片要放入bar切割
 
     (height, width) = cv.imread('image/'+pic_name+'.png',0).shape
      
-    for overrall_id in range(overall_num):
-        bar_num = Bar_line_cut(pic_name, overrall_id)
+    # 头数据 
+    fileHeader = ["overall_id","bar_id","part_id","x_left","y_left","x_right","y_right", "difficulty_local", "difficulty_overall"]
+    # 写入数据 
+    csvFile = open(pic_name+'/result/coordinate_info.csv', "w") 
+    writer = csv.writer(csvFile) 
+    writer.writerow(fileHeader) 
+    
+    for overall_id in range(overall_num):
+        bar_num, bar_coordinate = Bar_line_cut(pic_name, overall_id)
         for bar_id in range(bar_num):
-            Voice_part_cut(pic_name, overrall_id, bar_id, height, width)
+            part_coordinate, difficulty_local, difficulty_overall = Voice_part_cut(pic_name, overall_id, bar_id, height, width)
+            # 相较于整张图片，part切割时的坐标起点
+            x_absolute = overall_coordinate[overall_id][0] + bar_coordinate[bar_id][0] 
+            y_absolute = overall_coordinate[overall_id][1] + bar_coordinate[bar_id][1] 
+            # (x1,y1),(x2,y2)代表高声部的左上和右下关键点
+            x1 = x_absolute + part_coordinate[0][0]
+            y1 = y_absolute + part_coordinate[0][1]
+            
+            x2 = x_absolute + part_coordinate[0][2]
+            y2 = y_absolute + part_coordinate[0][3]
+            # (x3,y3),(x4,y4)代表低声部的左上和右下关键点
+            x3 = x_absolute + part_coordinate[1][0]
+            y3 = y_absolute + part_coordinate[1][1]
+            
+            x4 = x_absolute + part_coordinate[1][2]
+            y4 = y_absolute + part_coordinate[1][3]
+            
+            
+            # 内容数据 
+            line1 = [overall_id, bar_id, '0', x1, y1, x2, y2, difficulty_local[0], difficulty_overall[0]] 
+            line2 = [overall_id, bar_id, '1', x3, y3, x4, y4, difficulty_local[1], difficulty_overall[1]] 
+            # 分批写入 
+            writer.writerows([line1, line2])     
+    csvFile.close()       
+            
     return overall_num, bar_num   #返回这两个值，后期代码遍历结果用
 
 if __name__ == '__main__': 
-    pic_name = 'EQYY1-3'
+    #pic_name = ['EQYY1-3.png']
     pic_name = os.listdir('C:/Users/PKU/Desktop/eye_exp/image')        
     for i in range(len(pic_name)):
         print('**********************'+pic_name[i]+'************************')
         pic_name[i] = pic_name[i][:-4] 
         Cut_into_voive_part(pic_name[i])
-    
         
     
 
