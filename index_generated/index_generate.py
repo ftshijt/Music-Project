@@ -6,13 +6,13 @@
 # =============================================================================
 # 运行说明：请将images_cut_finished与sjt-eye-tracking-project这两个文件夹放至E盘根目录
 # 已发现bug：有些眼动数据里的图片不存在，如LB1_1，目前直接raise进行异常处理，但这样程序无法继续正常运行，目前仅测试B test4
-# 未实现功能：Visual_stability_and_rhythmic_stability中pearson系数的计算
 # 后期改进方向：函数结构大致一样，后期进行合并，精简代码，方便维护
 # =============================================================================
 
 import os
 import pandas as pd
 import warnings
+import numpy as np
 warnings.filterwarnings("ignore") #忽略警告，使输出不掺杂警告内容
 
 
@@ -188,8 +188,11 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path):
             
             #记录每一小节的凝视时数
             bar_time = [0 for t in range(int(all_bar/2))]
+            #记录每一小节低音高音部分difficulty_overall之和
+            bar_difficulty = [0 for t in range(int(all_bar/2))]
             
             for j in range(0, len(img_data)): #遍历每一个小节(分为高音和低音部分)
+                bar_index = int(j/2)
                 for indexs in eye_data_certain_MediaName.index:                    
                     if (img_data.ix[j, 'x_left']<=eye_data_certain_MediaName.ix[indexs, 'FixationPointX (MCSpx)'] and 
                         img_data.ix[j, 'y_left']<=eye_data_certain_MediaName.ix[indexs, 'FixationPointY (MCSpx)'] and
@@ -197,8 +200,9 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path):
                         img_data.ix[j, 'y_right']>=eye_data_certain_MediaName.ix[indexs, 'FixationPointY (MCSpx)']):
                         #如果视线的焦点在该小节内
                         #计算小节数
-                        bar_index = int(j/2)
                         bar_time[bar_index] += eye_data_certain_MediaName.ix[indexs, 'GazeEventDuration']
+                #在遍历coordinate_info.csv文件
+                bar_difficulty[bar_index] += img_data.ix[j, 'difficulty_overall']
             
             median = mediannum(bar_time)
             all_recommended_time = int(all_bar/2)*median
@@ -209,6 +213,17 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path):
                 all_actual_time += bar_time[j]
             difference = abs(all_actual_time - all_recommended_time)
             print (StudioTestName, ' ', singleMediaName, '节奏稳定性：', difference/all_recommended_time)
+            
+            #根据乐谱每一小节的难度对总演奏长度进行切分
+            all_difficulty = sum(bar_difficulty)
+            single_recommended_time = []
+            for j in range(int(all_bar/2)):
+                single_recommended_time.append(all_recommended_time * bar_difficulty[j] / all_difficulty)
+            
+            #与演奏者的实际结果序列计算pearson系数
+            recommended_and_actual_time = [single_recommended_time, bar_time]
+            pearson = np.corrcoef(recommended_and_actual_time)  #计算相关矩阵
+            print (StudioTestName, ' ', singleMediaName, '建议时间与实际时间的pearson系数：', pearson[0][1])
             
     
 
