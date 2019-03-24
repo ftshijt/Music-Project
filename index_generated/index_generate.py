@@ -10,25 +10,31 @@
 # =============================================================================
 
 import os
+import csv
 import pandas as pd
 import warnings
 import numpy as np
+import index_generate_utils
 warnings.filterwarnings("ignore") #忽略警告，使输出不掺杂警告内容
 
 
-#计算中位数
-def mediannum(num):
-    listnum = [num[i] for i in range(len(num))]
-    listnum.sort()
-    lnum = len(num)
-    if lnum % 2 == 1:
-        i = int((lnum + 1) / 2)-1
-        return listnum[i]
-    else:
-        i = int(lnum / 2)-1
-        return (listnum[i] + listnum[i + 1]) / 2
-    
-    
+#针对每一份tsv文件创立对应的输出文件
+def create_csv(file_name):
+    with open(file_name + '.csv', 'w', newline="") as f:
+        csv_write = csv.writer(f)
+        csv_head = ["StudioTestName",
+                    "singleMediaName",
+                    "IndexCategory",
+                    "IndexData"]
+        csv_write.writerow(csv_head)
+
+#向csv文件里面写入数据
+def write_csv(file_name, content):
+    with open(file_name + '.csv', 'a+', newline="") as f:
+        csv_write = csv.writer(f)
+        csv_write.writerow(content)
+
+
 #遍历文件夹，传入关键词
 def Traversal_file(file_path, txt_name):
     #遍历file_path下所有文件，包括子目录
@@ -63,7 +69,7 @@ def search_img_path(img_name):
 
 #乐谱阅读完成度（衡量学生整体的乐谱完成情况）
 #技术实现：所有含有眼睛焦点的小节数除以所有小节数
-def Music_score_reading_completeness(StudioTestName, file_path):
+def Music_score_reading_completeness(StudioTestName, file_path, file_name):
     eye_data = pd.read_csv(file_path, sep='\t', header=0, low_memory=False) #读入传入的tsv文件
     eye_data.fillna(0, inplace = True) #处理NaN值，直接在原数据中进行修改
     
@@ -105,15 +111,14 @@ def Music_score_reading_completeness(StudioTestName, file_path):
                         fixed_bar += 1
                         break
                     
-            #用含有眼睛焦点的小节数除以所有的小节数，并且输出
-            print (StudioTestName, ' ', singleMediaName, '乐谱阅读完成程度：', end = '')
-            print (fixed_bar / all_bar)
-            
+            #用含有眼睛焦点的小节数除以所有的小节数，并且输出到csv文件
+            content = [StudioTestName, singleMediaName, "Music_score_reading_completeness", fixed_bar / all_bar]
+            write_csv(file_name, content)
     
 
 #低音声部阅读完成度（衡量学生低音声部乐谱的完成情况）
 #技术实现：所有低音声部含有眼睛焦点的小节数除以所有低音声部小节数
-def Bass_part_reading_completeness(StudioTestName, file_path):
+def Bass_part_reading_completeness(StudioTestName, file_path, file_name):
     eye_data = pd.read_csv(file_path, sep='\t', header=0, low_memory=False) #读入传入的tsv文件
     eye_data.fillna(0, inplace = True) #处理NaN值，直接在原数据中进行修改
     
@@ -155,11 +160,11 @@ def Bass_part_reading_completeness(StudioTestName, file_path):
                         fixed_bar += 1
                         break
             
-            print (StudioTestName, ' ', singleMediaName, '低音声部乐谱阅读完成程度：', end = '')
-            print (fixed_bar / all_bass_bar)
+            content = [StudioTestName, singleMediaName, "Bass_part_reading_completeness", fixed_bar / all_bass_bar]
+            write_csv(file_name, content)
 
 #视奏稳定性（乐谱掌控能力）与节奏稳定性（匀速视奏能力）
-def Visual_stability_and_rhythmic_stability(StudioTestName, file_path):
+def Visual_stability_and_rhythmic_stability(StudioTestName, file_path, file_name):
     eye_data = pd.read_csv(file_path, sep='\t', header=0, low_memory=False) #读入传入的tsv文件
     eye_data.fillna(0, inplace = True) #处理NaN值，直接在原数据中进行修改
     
@@ -204,15 +209,17 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path):
                 #在遍历coordinate_info.csv文件
                 bar_difficulty[bar_index] += img_data.ix[j, 'difficulty_overall']
             
-            median = mediannum(bar_time)
+            median = index_generate_utils.mediannum(bar_time)
             all_recommended_time = int(all_bar/2)*median
-            print (StudioTestName, ' ', singleMediaName, '总建议时间：', all_recommended_time, 'ms')
+            content = [StudioTestName, singleMediaName, "all_recommended_time", all_recommended_time]
+            write_csv(file_name, content)
             
             all_actual_time = 0
             for j in range(len(bar_time)):
                 all_actual_time += bar_time[j]
             difference = abs(all_actual_time - all_recommended_time)
-            print (StudioTestName, ' ', singleMediaName, '节奏稳定性：', difference/all_recommended_time)
+            content = [StudioTestName, singleMediaName, "Visual_stability", all_recommended_time]
+            write_csv(file_name, content)
             
             #根据乐谱每一小节的难度对总演奏长度进行切分
             all_difficulty = sum(bar_difficulty)
@@ -223,14 +230,12 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path):
             #与演奏者的实际结果序列计算pearson系数
             recommended_and_actual_time = [single_recommended_time, bar_time]
             pearson = np.corrcoef(recommended_and_actual_time)  #计算相关矩阵
-            print (StudioTestName, ' ', singleMediaName, '建议时间与实际时间的pearson系数：', pearson[0][1])
+            content = [StudioTestName, singleMediaName, "Pearson_correlation_coefficient", pearson[0][1]]
+            write_csv(file_name, content)
             
     
-
-
-    
 #左右手统合能力
-def Left_and_right_hand_integration_ability(StudioTestName, file_path):
+def Left_and_right_hand_integration_ability(StudioTestName, file_path, file_name):
     eye_data = pd.read_csv(file_path, sep='\t', header=0, low_memory=False) #读入传入的tsv文件
     eye_data.fillna(0, inplace = True) #处理NaN值，直接在原数据中进行修改
     
@@ -280,8 +285,10 @@ def Left_and_right_hand_integration_ability(StudioTestName, file_path):
                             continue
                         handover_times += 1
                     
-            print (StudioTestName, ' ', singleMediaName, '平均每小节视线切换次数：', end = '')
-            print (handover_times / all_two_bar)
+            content = [StudioTestName, singleMediaName, 
+                       "Average_number_of_eye_switching_per_section", 
+                       handover_times / all_two_bar]
+            write_csv(file_name, content)
     
     
 #主函数
@@ -318,12 +325,17 @@ if __name__=='__main__':
         tsv = open("eye_tracking_file.txt")
         tsv_line = tsv.readline()
         while tsv_line:
-            if tsv_line.find(key) != -1: #找到包含对应测试名称的tsv文件
-                Music_score_reading_completeness(key, tsv_line[:-1])
-                Bass_part_reading_completeness(key, tsv_line[:-1])
-                Left_and_right_hand_integration_ability(key, tsv_line[:-1])
-                Visual_stability_and_rhythmic_stability(key, tsv_line[:-1])
-                break
+            index = tsv_line.find(key)
+            if index != -1: #找到包含对应测试名称的tsv文件
+                #截取测试的名称与记录名称并创立csv文件
+                test_record = tsv_line[index:len(tsv_line)-5]
+                create_csv(test_record)
+                
+                #进行指标的计算
+                Music_score_reading_completeness(key, tsv_line[:-1], test_record)
+                Bass_part_reading_completeness(key, tsv_line[:-1], test_record)
+                Left_and_right_hand_integration_ability(key, tsv_line[:-1], test_record)
+                Visual_stability_and_rhythmic_stability(key, tsv_line[:-1], test_record)
             tsv_line = tsv.readline()
         tsv.close()
     
