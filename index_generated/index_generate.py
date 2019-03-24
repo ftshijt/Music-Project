@@ -4,7 +4,6 @@
 """
 
 # =============================================================================
-# 运行说明：请将images_cut_finished与sjt-eye-tracking-project这两个文件夹放至E盘根目录
 # 已发现bug：有些眼动数据里的图片不存在，如LB1_1，目前直接raise进行异常处理，但这样程序无法继续正常运行，目前仅测试B test4
 # 后期改进方向：函数结构大致一样，后期进行合并，精简代码，方便维护
 # =============================================================================
@@ -42,11 +41,11 @@ def Traversal_file(file_path, txt_name):
     files = os.listdir(file_path)
     for fi in files:
         fi_d = os.path.join(file_path, fi)
+        
         if os.path.isdir(fi_d):
             Traversal_file(fi_d, txt_name)  #递归 
         else:
-            result = os.path.join(file_path, fi_d)
-            txt_file.write(result+'\n')
+            txt_file.write(fi_d+'\n')
     txt_file.close
 
 
@@ -163,7 +162,7 @@ def Bass_part_reading_completeness(StudioTestName, file_path, file_name):
             content = [StudioTestName, singleMediaName, "Bass_part_reading_completeness", fixed_bar / all_bass_bar]
             write_csv(file_name, content)
 
-#视奏稳定性（乐谱掌控能力）与节奏稳定性（匀速视奏能力）
+#视奏稳定性（乐谱掌控能力）、节奏稳定性（匀速视奏能力）、图片与测试的难度（黑色像素比例）
 def Visual_stability_and_rhythmic_stability(StudioTestName, file_path, file_name):
     eye_data = pd.read_csv(file_path, sep='\t', header=0, low_memory=False) #读入传入的tsv文件
     eye_data.fillna(0, inplace = True) #处理NaN值，直接在原数据中进行修改
@@ -171,6 +170,9 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path, file_name
     #对读入的tsv文件的MediaName列进行去重，筛选出所有的谱子名称
     raw_MediaName = eye_data['MediaName']
     MediaName = raw_MediaName.drop_duplicates(keep='first')  
+    
+    #记录每个图片的难度
+    media_difficulty = []
     
     for i in range(0, len(MediaName)):
         #针对每一个谱子，查找对应的coordinate_info.csv文件
@@ -205,7 +207,8 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path, file_name
                         img_data.ix[j, 'y_right']>=eye_data_certain_MediaName.ix[indexs, 'FixationPointY (MCSpx)']):
                         #如果视线的焦点在该小节内
                         #计算小节数
-                        bar_time[bar_index] += eye_data_certain_MediaName.ix[indexs, 'GazeEventDuration']
+                        bar_time[bar_index] = eye_data_certain_MediaName.ix[indexs, 'GazeEventDuration']
+                        break
                 #在遍历coordinate_info.csv文件
                 bar_difficulty[bar_index] += img_data.ix[j, 'difficulty_overall']
             
@@ -218,7 +221,7 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path, file_name
             for j in range(len(bar_time)):
                 all_actual_time += bar_time[j]
             difference = abs(all_actual_time - all_recommended_time)
-            content = [StudioTestName, singleMediaName, "Visual_stability", all_recommended_time]
+            content = [StudioTestName, singleMediaName, "Rhythmic_stability", difference / all_recommended_time]
             write_csv(file_name, content)
             
             #根据乐谱每一小节的难度对总演奏长度进行切分
@@ -227,11 +230,22 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path, file_name
             for j in range(int(all_bar/2)):
                 single_recommended_time.append(all_recommended_time * bar_difficulty[j] / all_difficulty)
             
+            #对所有bar的难度进行平均
+            bar_difficulty_ave = all_difficulty / len(bar_difficulty)
+            content = [StudioTestName, singleMediaName, "bar_difficulty_ave", bar_difficulty_ave]
+            write_csv(file_name, content)
+            media_difficulty.append(bar_difficulty_ave)
+            
             #与演奏者的实际结果序列计算pearson系数
             recommended_and_actual_time = [single_recommended_time, bar_time]
             pearson = np.corrcoef(recommended_and_actual_time)  #计算相关矩阵
-            content = [StudioTestName, singleMediaName, "Pearson_correlation_coefficient", pearson[0][1]]
+            content = [StudioTestName, singleMediaName, "Visual_stability", pearson[0][1]]
             write_csv(file_name, content)
+            
+    #以图片为单位进行难度平均并写入
+    media_difficulty_ave = sum(media_difficulty) / len(media_difficulty)
+    content = [StudioTestName, "all", "media_difficulty", media_difficulty_ave]
+    write_csv(file_name, content)
             
     
 #左右手统合能力
@@ -286,7 +300,7 @@ def Left_and_right_hand_integration_ability(StudioTestName, file_path, file_name
                         handover_times += 1
                     
             content = [StudioTestName, singleMediaName, 
-                       "Average_number_of_eye_switching_per_section", 
+                       "Left_and_right_hand_integration_ability", 
                        handover_times / all_two_bar]
             write_csv(file_name, content)
     
@@ -300,42 +314,42 @@ if __name__=='__main__':
         os.remove("eye_tracking_file.txt")
         
     #将所有的图片和tsv文件路径存到一个txt文件夹里面
-    image_path = "E:\images_cut_finished"
-    eye_tracking_path = "E:\sjt-eye-tracking-project"
+    image_path = "..\..\images_cut_finished"
+    eye_tracking_path = "..\..\sjt-eye-tracking-project"
     Traversal_file(image_path, "image_file.txt")
     Traversal_file(eye_tracking_path, "eye_tracking_file.txt")
     
     #对于tsv文件进行遍历
     #先筛选出所有被测试的名称
-    StudioTestName = {'B test4':[]
-#                      'Btest_new3':[],
-#                      'Btest_new6':[],
-#                      'C test3':[],
-#                      'C test4':[],
-#                      'C test5':[],
-#                      'C test6':[],
-#                      'French_test1':[],
-#                      'French_test3':[],
-#                      'French_test4':[],
-#                      'French_test5':[]
-                      }
+    StudioTestName = ['B test4'
+#                      'Btest_new3',
+#                      'Btest_new6',
+#                      'C test3',
+#                      'C test4',
+#                      'C test5',
+#                      'C test6',
+#                      'French_test1',
+#                      'French_test3',
+#                      'French_test4',
+#                      'French_test5'
+                      ]
     
-    for key, value in StudioTestName.items():
+    for test_name in StudioTestName:
         #查找对应的tsv和图片文件
         tsv = open("eye_tracking_file.txt")
         tsv_line = tsv.readline()
         while tsv_line:
-            index = tsv_line.find(key)
+            index = tsv_line.find(test_name)
             if index != -1: #找到包含对应测试名称的tsv文件
                 #截取测试的名称与记录名称并创立csv文件
                 test_record = tsv_line[index:len(tsv_line)-5]
                 create_csv(test_record)
                 
                 #进行指标的计算
-                Music_score_reading_completeness(key, tsv_line[:-1], test_record)
-                Bass_part_reading_completeness(key, tsv_line[:-1], test_record)
-                Left_and_right_hand_integration_ability(key, tsv_line[:-1], test_record)
-                Visual_stability_and_rhythmic_stability(key, tsv_line[:-1], test_record)
+                Music_score_reading_completeness(test_name, tsv_line[:-1], test_record)
+                Bass_part_reading_completeness(test_name, tsv_line[:-1], test_record)
+                Left_and_right_hand_integration_ability(test_name, tsv_line[:-1], test_record)
+                Visual_stability_and_rhythmic_stability(test_name, tsv_line[:-1], test_record)
             tsv_line = tsv.readline()
         tsv.close()
     

@@ -1,83 +1,83 @@
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 161.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 162.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 163.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 164.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 165.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new3_Rec 241.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new3_Rec 2411.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new3_Rec 242.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new3_Rec 245.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new6_Rec 231.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new6_Rec 232.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new6_Rec 235.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new6_Rec 2351.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec 182.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec 183.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec 184.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec 185.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_rec181.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec1811.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 191.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 192.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 195.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 211.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 212.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 215.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 111.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 112.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 113.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 114.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 115.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 121.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 122.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 123.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 124.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 125.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 126.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 132.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 133.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 134.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 135.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 141.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 142.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 143.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 144.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 145.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 151.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 152.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 153.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 154.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 155.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test6_Rec 201.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test6_Rec 202.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test6_Rec 205.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Data_Export.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_Data_Export.xlsx
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test1_Rec 02.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test1_Rec 03.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test1_Rec 04.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test1_Rec 05.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 171.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 172.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 173.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 174.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 175.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 31.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 32.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 33.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 34.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 35.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 11.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 12.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 13.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 14.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 15.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 21.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 22.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 23.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 24.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 25.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec xx.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec xxl.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec xxxl.tsv
-E:\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_rec xxxr.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 161.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 162.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 163.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 164.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_B test4_Rec 165.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new3_Rec 241.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new3_Rec 2411.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new3_Rec 242.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new3_Rec 245.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new6_Rec 231.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new6_Rec 232.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new6_Rec 235.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Btest_new6_Rec 2351.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec 182.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec 183.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec 184.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec 185.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_rec181.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test3_Rec1811.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 191.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 192.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 195.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 211.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 212.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test4_Rec 215.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 111.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 112.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 113.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 114.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 115.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 121.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 122.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 123.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 124.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 125.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 126.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 132.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 133.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 134.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 135.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 141.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 142.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 143.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 144.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 145.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 151.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 152.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 153.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 154.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test5_Rec 155.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test6_Rec 201.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test6_Rec 202.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_C test6_Rec 205.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Data_Export.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_Data_Export.xlsx
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test1_Rec 02.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test1_Rec 03.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test1_Rec 04.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test1_Rec 05.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 171.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 172.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 173.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 174.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test3_Rec 175.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 31.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 32.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 33.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 34.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test4_Rec 35.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 11.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 12.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 13.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 14.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 15.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 21.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 22.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 23.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 24.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec 25.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec xx.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec xxl.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_Rec xxxl.tsv
+..\..\sjt-eye-tracking-project\French_test(Chinese_pieces)_French_test5_rec xxxr.tsv
