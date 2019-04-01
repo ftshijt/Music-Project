@@ -17,9 +17,12 @@ import index_generate_utils
 warnings.filterwarnings("ignore") #忽略警告，使输出不掺杂警告内容
 
 
+current_path = os.path.abspath('.')   #表示当前所处的文件夹的绝对路径  
+
+
 #针对每一份tsv文件创立对应的输出文件
 def create_csv(file_name):
-    with open(file_name + '.csv', 'w', newline="") as f:
+    with open(current_path + '/generate_csv/' + file_name + '.csv', 'w+', newline="") as f:
         csv_write = csv.writer(f)
         csv_head = ["StudioTestName",
                     "singleMediaName",
@@ -29,7 +32,7 @@ def create_csv(file_name):
 
 #向csv文件里面写入数据
 def write_csv(file_name, content):
-    with open(file_name + '.csv', 'a+', newline="") as f:
+    with open(current_path + '/generate_csv/' + file_name + '.csv', 'a+', newline="") as f:
         csv_write = csv.writer(f)
         csv_write.writerow(content)
 
@@ -238,8 +241,9 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path, file_name
             
             #与演奏者的实际结果序列计算pearson系数
             recommended_and_actual_time = [single_recommended_time, bar_time]
-            pearson = np.corrcoef(recommended_and_actual_time)  #计算相关矩阵
-            content = [StudioTestName, singleMediaName, "Visual_stability", pearson[0][1]]
+            pearson = np.corrcoef(recommended_and_actual_time)[0][1]  #计算相关矩阵并提取皮尔森系数
+            scaled_pearson = (pearson + 1) * 50  #将系数的范围转移到 0-100 区间
+            content = [StudioTestName, singleMediaName, "Visual_stability", scaled_pearson]
             write_csv(file_name, content)
             
     #以图片为单位进行难度平均并写入
@@ -305,6 +309,60 @@ def Left_and_right_hand_integration_ability(StudioTestName, file_path, file_name
             write_csv(file_name, content)
     
     
+def Spectral_analysis_ability3_difference_between_treble_and_bass(StudioTestName, file_path, file_name):
+    eye_data = pd.read_csv(file_path, sep='\t', header=0, low_memory=False) #读入传入的tsv文件
+    eye_data.fillna(0, inplace = True) #处理NaN值，直接在原数据中进行修改
+    
+    #对读入的tsv文件的MediaName列进行去重，筛选出所有的谱子名称
+    raw_MediaName = eye_data['MediaName']
+    MediaName = raw_MediaName.drop_duplicates(keep='first')  
+    
+    for i in range(0, len(MediaName)):
+        #针对每一个谱子，查找对应的coordinate_info.csv文件
+        singleMediaName = MediaName.iloc[i]
+        
+        if singleMediaName == 0:  #在处理原数据的时候把所有的NaN赋为了0
+            continue
+        else:
+            img_path = search_img_path(singleMediaName[:-4]) #所有的后缀都是.jpg或者.PNG，长度一致
+            if img_path == 0: #查找blank的返回值
+                continue
+            img_path = img_path[:-1] #去掉字符串结尾的'/n'
+            
+             #针对特定谱子的行，结合coordinate_info.csv文件判断含有眼睛焦点的小节数
+            img_data = pd.read_csv(img_path)
+            all_bar = img_data.shape[0]
+            
+            #在原眼动数据中筛选出含有singleMediaName的行
+            eye_data_certain_MediaName = eye_data[eye_data['MediaName'].isin([singleMediaName])]
+            
+            #记录每一小节的凝视时数(区分高音低音声部)
+            bar_time = [0 for t in range(int(all_bar))]
+            
+            for j in range(0, len(img_data)): #遍历每一个小节(分为高音和低音部分)
+                for indexs in eye_data_certain_MediaName.index:                    
+                    if (img_data.ix[j, 'x_left']<=eye_data_certain_MediaName.ix[indexs, 'FixationPointX (MCSpx)'] and 
+                        img_data.ix[j, 'y_left']<=eye_data_certain_MediaName.ix[indexs, 'FixationPointY (MCSpx)'] and
+                        img_data.ix[j, 'x_right']>=eye_data_certain_MediaName.ix[indexs, 'FixationPointX (MCSpx)'] and
+                        img_data.ix[j, 'y_right']>=eye_data_certain_MediaName.ix[indexs, 'FixationPointY (MCSpx)']):
+                        #如果视线的焦点在该小节内
+                        #计算凝视时间
+                        bar_time[j] = eye_data_certain_MediaName.ix[indexs, 'GazeEventDuration']
+                        break
+            
+            sum_high_time = 0
+            sum_low_time = 0
+            for j in range(len(bar_time)):
+                if j % 2 == 0:
+                    sum_high_time += bar_time[j]
+                else:
+                    sum_low_time += bar_time[j]
+            median = index_generate_utils.mediannum(bar_time) #注意这里的中位数是区分高音低音部分的
+            difference_rate = abs(sum_high_time - sum_low_time) / median
+            content = [StudioTestName, singleMediaName, "Spectral_analysis_ability3", difference_rate]
+            write_csv(file_name, content)
+    
+    
 #主函数
 if __name__=='__main__':
     #防止多次运行在文件中出现重复的路径
@@ -350,6 +408,7 @@ if __name__=='__main__':
                 Bass_part_reading_completeness(test_name, tsv_line[:-1], test_record)
                 Left_and_right_hand_integration_ability(test_name, tsv_line[:-1], test_record)
                 Visual_stability_and_rhythmic_stability(test_name, tsv_line[:-1], test_record)
+                Spectral_analysis_ability3_difference_between_treble_and_bass(test_name, tsv_line[:-1], test_record)
             tsv_line = tsv.readline()
         tsv.close()
     
