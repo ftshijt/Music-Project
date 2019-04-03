@@ -14,6 +14,7 @@ import pandas as pd
 import warnings
 import numpy as np
 import index_generate_utils
+from scipy.stats import pearsonr
 warnings.filterwarnings("ignore") #忽略警告，使输出不掺杂警告内容
 
 
@@ -240,8 +241,10 @@ def Visual_stability_and_rhythmic_stability(StudioTestName, file_path, file_name
             media_difficulty.append(bar_difficulty_ave)
             
             #与演奏者的实际结果序列计算pearson系数
-            recommended_and_actual_time = [single_recommended_time, bar_time]
-            pearson = np.corrcoef(recommended_and_actual_time)[0][1]  #计算相关矩阵并提取皮尔森系数
+            pearson = pearsonr(single_recommended_time, bar_time)[0]
+            print(pearson)
+#            recommended_and_actual_time = [single_recommended_time, bar_time]
+#            pearson = np.corrcoef(recommended_and_actual_time)[0][1]  #计算相关矩阵并提取皮尔森系数
             scaled_pearson = (pearson + 1) * 50  #将系数的范围转移到 0-100 区间
             content = [StudioTestName, singleMediaName, "Visual_stability", scaled_pearson]
             write_csv(file_name, content)
@@ -379,17 +382,18 @@ if __name__=='__main__':
     
     #对于tsv文件进行遍历
     #先筛选出所有被测试的名称
-    StudioTestName = ['B test4'
-#                      'Btest_new3',
-#                      'Btest_new6',
-#                      'C test3',
-#                      'C test4',
-#                      'C test5',
-#                      'C test6',
-#                      'French_test1',
-#                      'French_test3',
-#                      'French_test4',
-#                      'French_test5'
+    StudioTestName = [#'B test4',
+                      'Btest_new3',
+                      'Btest_new6',
+                      'C test3',
+                      'C test4',
+                      'C test5',
+                      'C test6',
+                      'French_test1',
+                      'French_test2',
+                      'French_test3',
+                      'French_test4',
+                      'French_test5'
                       ]
     
     for test_name in StudioTestName:
@@ -404,11 +408,11 @@ if __name__=='__main__':
                 create_csv(test_record)
                 
                 #进行指标的计算
-                Music_score_reading_completeness(test_name, tsv_line[:-1], test_record)
-                Bass_part_reading_completeness(test_name, tsv_line[:-1], test_record)
-                Left_and_right_hand_integration_ability(test_name, tsv_line[:-1], test_record)
+#                Music_score_reading_completeness(test_name, tsv_line[:-1], test_record)
+#                Bass_part_reading_completeness(test_name, tsv_line[:-1], test_record)
+#                Left_and_right_hand_integration_ability(test_name, tsv_line[:-1], test_record)
                 Visual_stability_and_rhythmic_stability(test_name, tsv_line[:-1], test_record)
-                Spectral_analysis_ability3_difference_between_treble_and_bass(test_name, tsv_line[:-1], test_record)
+#                Spectral_analysis_ability3_difference_between_treble_and_bass(test_name, tsv_line[:-1], test_record)
             tsv_line = tsv.readline()
         tsv.close()
     
