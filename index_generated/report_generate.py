@@ -52,7 +52,6 @@ def English2Chinese(name):
         return "视奏稳定性"
     elif (name == "Spectral_analysis_ability3"):
         return "高音、低音谱号的差异"
-    return error
     
 
 if __name__=='__main__':
@@ -87,15 +86,16 @@ if __name__=='__main__':
     csv.close()
     
     #将各项指标的平均值以测试为单位去计算出来
-    all_index = {'Music_score_reading_completeness':[],
-                 'Bass_part_reading_completeness':[],
-                 'Left_and_right_hand_integration_ability':[],
-                 'all_recommended_time':[],
-                 'Rhythmic_stability':[],
-                 'bar_difficulty_ave':[],
-                 'Visual_stability':[],
-                 'media_difficulty':[],
-                 'Spectral_analysis_ability3':[]}
+    all_index = {'Music_score_reading_completeness':{'1':[],'2':[],'3':[],'4':[],'5':[]},
+                 'Bass_part_reading_completeness':{'1':[],'2':[],'3':[],'4':[],'5':[]},
+                 'Left_and_right_hand_integration_ability':{'1':[],'2':[],'3':[],'4':[],'5':[]},
+                 'all_recommended_time':{'1':[],'2':[],'3':[],'4':[],'5':[]},
+                 'Rhythmic_stability':{'1':[],'2':[],'3':[],'4':[],'5':[]},
+                 'bar_difficulty_ave':{'1':[],'2':[],'3':[],'4':[],'5':[]},
+                 'Visual_stability':{'1':[],'2':[],'3':[],'4':[],'5':[]},
+                 'media_difficulty':{'1':[],'2':[],'3':[],'4':[],'5':[]},
+                 'Spectral_analysis_ability3':{'1':[],'2':[],'3':[],'4':[],'5':[]}
+                 }
     
     csv = open("report_csv_file.txt")
     csv_line = csv.readline()
@@ -103,6 +103,7 @@ if __name__=='__main__':
         #提取出文件名，便于后面使用
         t_list = csv_line.split('\\')
         test_record = t_list[len(t_list)-1][:-5]
+        record_kind = test_record[-1:]
         
         #读入csv文件
         current_csv = pd.read_csv(csv_line[:-1])
@@ -116,17 +117,19 @@ if __name__=='__main__':
             
             #在原数据中筛选出含有singleIndexCategory的行
             report_csv_IndexCategory = current_csv[current_csv['IndexCategory'].isin([singleIndexCategory])]
+            report_csv_IndexCategory.fillna(0, inplace = True) #处理NaN值，直接在原数据中进行修改
             
-            #进行可视化
+            #将数据计算出平均数储存到all_index的对应位置
             IndexData = report_csv_IndexCategory['IndexData']
-            all_index[singleIndexCategory].append(np.mean(IndexData))
+            all_index[singleIndexCategory][record_kind].append(np.mean(IndexData))
             
         csv_line = csv.readline()
     csv.close()
     
     #对all_index中的数据进行排序
     for key, values in all_index.items():
-        all_index[key].sort()
+        for kind in ['1','2','3','4','5']:
+            all_index[key][kind].sort()
     
     #以测试为单位生成可视化报告并加入排名
     #遍历csv文件
@@ -136,6 +139,7 @@ if __name__=='__main__':
         #提取出文件名，便于后面使用
         t_list = csv_line.split('\\')
         test_record = t_list[len(t_list)-1][:-5]
+        record_kind = test_record[-1:]
         
         #读入csv文件
         current_csv = pd.read_csv(csv_line[:-1])
@@ -153,14 +157,15 @@ if __name__=='__main__':
                 
                 #在原数据中筛选出含有singleIndexCategory的行
                 report_csv_IndexCategory = current_csv[current_csv['IndexCategory'].isin([singleIndexCategory])]
+                report_csv_IndexCategory.fillna(0, inplace = True) #处理NaN值，直接在原数据中进行修改
                 
                 #进行可视化
                 #提取数据，计算排名
                 MediaName = report_csv_IndexCategory['singleMediaName']
                 IndexData = report_csv_IndexCategory['IndexData']
                 IndexData_ave = np.mean(IndexData)
-                order = all_index[singleIndexCategory].index(IndexData_ave)
-                rank = order / len(all_index[singleIndexCategory]) * 100
+                order = all_index[singleIndexCategory][record_kind].index(IndexData_ave)
+                rank = order / len(all_index[singleIndexCategory][record_kind]) * 100
                 
                 #画出左侧折线图
                 plt.subplot(121)

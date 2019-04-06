@@ -10,4 +10,6 @@ def mediannum(listnum):
         if item == 0:
             listnum.remove(item)
     #返回中位数
+    if len(listnum) == 0:
+        return 0
     return sorted(listnum)[int(len(listnum) / 2)]
