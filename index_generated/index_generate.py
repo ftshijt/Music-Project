@@ -381,18 +381,18 @@ if __name__=='__main__':
     
     #对于tsv文件进行遍历
     #先筛选出所有被测试的名称
-    StudioTestName = [#'B test4',
+    StudioTestName = ['B test4'
 #                      'Btest_new3',
 #                      'Btest_new6',
-                      'C test3',
-                      'C test4',
-                      'C test5',
-                      'C test6',
-                      'French_test1',
-                      'French_test2',
-                      'French_test3',
-                      'French_test4',
-                      'French_test5'
+#                      'C test3',
+#                      'C test4',
+#                      'C test5',
+#                      'C test6',
+#                      'French_test1',
+#                      'French_test2',
+#                      'French_test3',
+#                      'French_test4',
+#                      'French_test5'
                       ]
     
     for test_name in StudioTestName:
