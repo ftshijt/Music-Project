@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from pylab import mpl
 import warnings
-import re
 import copy
 warnings.filterwarnings("ignore") #忽略警告，使输出不掺杂警告内容
 
