@@ -11,6 +11,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from pylab import mpl
+import warnings
+import copy
+warnings.filterwarnings("ignore") #忽略警告，使输出不掺杂警告内容
 
 
 mpl.rcParams['font.sans-serif'] = ['FangSong'] # 指定默认字体
@@ -52,6 +55,47 @@ def English2Chinese(name):
         return "视奏稳定性"
     elif (name == "Spectral_analysis_ability3"):
         return "高音、低音谱号的差异"
+    
+    
+#把同一个谱子的不同小节数据合在一起，计算平均值，返回dict
+def CombineBar(MediaName, IndexData):
+    new_MediaName = copy.deepcopy(MediaName)
+    count = 0
+    for name in MediaName:
+        #返回第一个数字的位置
+        first_num = len(name)-1
+        for i in range(len(name)):
+            if (ord(name[i]) >= ord('0') and ord(name[i]) <= ord('9')):
+                first_num = i
+                break
+        #返回第一个‘.’的位置
+        first_point = name.index('.')
+        split_location = min(first_num, first_point)
+        new_MediaName[count] = MediaName[count][:split_location]
+        count += 1
+    #对名字进行去重
+    duplicate_name = []
+    for name in new_MediaName:
+        if name not in duplicate_name:
+            duplicate_name.append(name)
+    duplicate_data = []
+    #对相同谱子不同小节的数据求平均值
+    for name in duplicate_name:
+        sum = 0
+        t_count = 0
+        media_count = 0
+        for t_name in new_MediaName:
+            if t_name == name:
+                sum += IndexData[t_count]
+                media_count += 1
+            t_count += 1
+        ave = sum / media_count
+        duplicate_data.append(ave)
+    return dict(zip(duplicate_name,duplicate_data))
+
+
+
+ 
     
 
 if __name__=='__main__':
@@ -169,10 +213,12 @@ if __name__=='__main__':
                 
                 #画出左侧折线图
                 plt.subplot(121)
-                plt.plot(MediaName, IndexData)   
+                #把同一个谱子的不同小节合到一起并且计算平均值
+                bar_index = CombineBar(np.array(MediaName), np.array(IndexData))
+                plt.plot(bar_index.keys(), bar_index.values())
                 plt.title(English2Chinese(singleIndexCategory))
-                for x, y in zip(MediaName, IndexData):  #在转折点上显示数值
-                    plt.text(x, y, str('%.3f' % y), ha='center', va='bottom', fontsize=10.5)
+#                for x, y in zip(MediaName, IndexData):  #在转折点上显示数值
+#                    plt.text(x, y, str('%.3f' % y), ha='center', va='bottom', fontsize=10.5)
                 plt.xlabel('图片名称')
                 plt.ylabel('指标数据')
                 plt.xticks(rotation=40)  #x轴名称进行旋转，使其显示完全

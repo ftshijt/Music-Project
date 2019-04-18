@@ -1,0 +1,15 @@
+StudioTestName,RecordName,ParticipantName,singleMediaName,IndexCategory,IndexData
+C test4,Rec 215,P21,FLXNH1.PNG,Music_score_reading_completeness,0.9615384615384616
+C test4,Rec 215,P21,FLXNH2.PNG,Music_score_reading_completeness,0.9642857142857143
+C test4,Rec 215,P21,DTEZXTBB1.PNG,Music_score_reading_completeness,1.0
+C test4,Rec 215,P21,DTEZXTBB2.PNG,Music_score_reading_completeness,1.0
+C test4,Rec 215,P21,DTEZXTBB3.PNG,Music_score_reading_completeness,1.0
+C test4,Rec 215,P21,LHH1.PNG,Music_score_reading_completeness,1.0
+C test4,Rec 215,P21,LHH2.PNG,Music_score_reading_completeness,0.9166666666666666
+C test4,Rec 215,P21,FLXNH1.PNG,Bass_part_reading_completeness,1.0
+C test4,Rec 215,P21,FLXNH2.PNG,Bass_part_reading_completeness,0.9285714285714286
+C test4,Rec 215,P21,DTEZXTBB1.PNG,Bass_part_reading_completeness,1.0
+C test4,Rec 215,P21,DTEZXTBB2.PNG,Bass_part_reading_completeness,1.0
+C test4,Rec 215,P21,DTEZXTBB3.PNG,Bass_part_reading_completeness,1.0
+C test4,Rec 215,P21,LHH1.PNG,Bass_part_reading_completeness,1.0
+C test4,Rec 215,P21,LHH2.PNG,Bass_part_reading_completeness,0.8333333333333334
