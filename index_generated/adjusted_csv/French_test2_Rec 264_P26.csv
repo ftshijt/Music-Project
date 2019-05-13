@@ -1,4 +1,4 @@
-StudioTestName,RecordName,ParticipantName,Music_score_reading_completeness,Bass_part_reading_completeness,Left_and_right_hand_integration_ability,all_recommended_time,Rhythmic_stability,bar_difficulty_ave,Visual_stability,Spectral_analysis_ability3
+StudioTestName,RecordName,ParticipantName,singleMediaName,Music_score_reading_completeness,Bass_part_reading_completeness,Left_and_right_hand_integration_ability,all_recommended_time,Rhythmic_stability,bar_difficulty_ave,Visual_stability,Spectral_analysis_ability3
 French_test2,Rec 264,P26,EQYY1-1.png,0.8,1.0,19.2,900.0,1.2977777777777777,0.01038,55.4473592590973,19.153846153846157
 French_test2,Rec 264,P26,EQYY1-2.png,0.7,1.0,1.4,920.0,0.8434782608695652,0.01316,30.27130219606542,12.4375
 French_test2,Rec 264,P26,EQYY1-3.png,0.75,1.0,13.666666666666664,2064.0,0.2926356589147287,0.00848333333333333,48.421124028857,7.148648648648647
