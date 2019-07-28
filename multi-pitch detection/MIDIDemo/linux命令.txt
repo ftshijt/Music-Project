@@ -1,0 +1,2 @@
+eric@eric-virtual-machine:~/桌面/midi/MIDIDemo/MIDIDemo$ g++ ./src-library/*.cpp main.cpp -o ./obj/main -Wall -I ./include
+eric@eric-virtual-machine:~/桌面/midi/MIDIDemo/MIDIDemo$ ./run.sh
